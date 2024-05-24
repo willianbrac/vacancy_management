@@ -1,4 +1,4 @@
-package br.com.willianbrac.vacancy_management.modules.company;
+package br.com.willianbrac.vacancy_management.modules.company.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.willianbrac.vacancy_management.modules.company.entities.CompanyEntity;
 import br.com.willianbrac.vacancy_management.modules.company.useCases.CreateCompanyUseCase;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/company")
@@ -18,7 +19,7 @@ public class CompanyController {
   private CreateCompanyUseCase createCompanyUseCase;
 
   @PostMapping("/")
-  public ResponseEntity<Object> create(@RequestBody CompanyEntity companyEntity) {
+  public ResponseEntity<Object> create(@Valid @RequestBody CompanyEntity companyEntity) {
 
     try {
       var result = this.createCompanyUseCase.execute(companyEntity);
