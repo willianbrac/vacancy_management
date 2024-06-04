@@ -50,15 +50,19 @@ public class AuthCandidateUseCase {
     // Monta o token
     Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
+    var expiresIn = Instant.now().plus(Duration.ofMinutes(10));
+
     var token = JWT.create()
         .withIssuer("javagas") // adiciona o emissor do token
         .withSubject(candidate.getId().toString()) // adiciona o id do usuário para recuperar depois
         .withClaim("roles", Arrays.asList("candidate")) // adiciona as roles do usuário
-        .withExpiresAt(Instant.now().plus(Duration.ofMinutes(60))) // define o tempo de expiração do token
+        .withExpiresAt(expiresIn) // define o tempo de expiração do token
         .sign(algorithm);
 
     var AuthCandidateResponse = AuthCandidateResponseDTO.builder() // monta o response com o builder
-        .access_token(token).build();
+        .access_token(token)
+        .expires_in(expiresIn.toEpochMilli())
+        .build();
 
     return AuthCandidateResponse;
   }
