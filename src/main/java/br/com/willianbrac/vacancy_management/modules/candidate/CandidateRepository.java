@@ -9,4 +9,6 @@ public interface CandidateRepository extends JpaRepository<CandidateEntity, UUID
 
   // busca dinâmica pelo username ou email
   Optional<CandidateEntity> findByUsernameOrEmail(String username, String email);
+
+  Optional<CandidateEntity> findByUsername(String username);
 }
